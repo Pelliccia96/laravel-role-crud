@@ -22,5 +22,33 @@
             </div>
         </div>
     </div>
+    {{-- Tabella Users --}}
+    <div class="card my-5">
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome utente</th>
+                        <th>Email</th>
+                        <th>Creato il</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($users as $user)
+                    <tr>
+                        <td>{{ $user->id }}</td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->created_at }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div>
+        <a href="{{ route('posts.create') }}"><button class="btn btn-secondary fw-semibold mx-3">&plus; Add New Post</button></a>
+    </div>
 </div>
 @endsection
