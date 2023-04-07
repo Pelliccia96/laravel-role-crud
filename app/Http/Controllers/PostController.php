@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -27,7 +28,9 @@ class PostController extends Controller
     public function create()
     {
         $posts = Post::all();
-        return view("posts.create", compact('posts'));
+        $categories = Category::all();
+
+        return view("posts.create", compact('posts', 'categories'));
     }
 
     /**
@@ -35,17 +38,27 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+        // validated() usa le regole indicate nella funzione rules dello StorePostRequest e ci ritorna i dati validati
         $user = Auth::user();
         $data = $request->validated();
         $post = Post::create($data);
 
-        if (key_exists('image', $data)){
+        // Salviamo il file nello storage e recuperiamo il path
+        // carico il file solo se ne ricevo uno
+        if (key_exists('image', $data)) {
+            // salvo in una variabile temporanea il percorso del nuovo file
             $path = Storage::put('posts', $data['image']);
             $post->image = $path;
-        } 
+        }
 
         $post->user_id = $user->id;
         $post->save();
+
+        // Controlla che nei dati che il server sta ricevendo, ci sia un valore per la chiave "categories".
+        if ($request->has("categories")) {
+            // if (key_exists("categories", $data)) {
+            $post->categories()->attach($data["categories"]);
+        }
 
         return redirect()->route('posts.show', $post->id);
     }
@@ -70,8 +83,9 @@ class PostController extends Controller
         // $post = Post::findOrFail($id);
 
         // dd($post->categories);
+        $categories = Category::all();
 
-        return view("posts.edit", compact('post'));
+        return view("posts.edit", compact('post', 'categories'));
     }
 
     /**
@@ -82,14 +96,21 @@ class PostController extends Controller
         $data = $request->validated();
         $post->update($data);
 
-        if(key_exists("image", $data)){
+        // carico il file solo se ne ricevo uno
+        if (key_exists("image", $data)) {
+            // salvo in una variabile temporanea il percorso del nuovo file
             $path = Storage::put("posts", $data["image"]);
+            // Dopo aver caricato la nuova immagine, prima di aggiornare il db,
+            // cancelliamo dallo storage il vecchio file.
             Storage::delete($post->image);
+
             $post->image = $path;
         }
 
         $post->visibility = $request->has('visibility');
         $post->save();
+
+        $post->categories()->sync($data['categories']);
 
         return redirect()->route('posts.show', $post->id);
     }
@@ -99,9 +120,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        if($post->image){
+        if ($post->image) {
             Storage::delete($post->image);
         }
+
+        $post->categories()->detach();
         $post->delete();
 
         return redirect()->route('dashboard');

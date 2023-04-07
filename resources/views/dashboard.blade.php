@@ -60,6 +60,7 @@
                         <th>ID</th>
                         <th>Titolo post</th>
                         <th>Immagine</th>
+                        <th>Categoria</th>
                         <th>Descrizione post</th>
                         <th>Visibilità</th>
                         <th>Mostra</th>
@@ -82,6 +83,11 @@
                         </td>
                         @endif
                         {{-- <td>{{ $post->category ? $post->category->name : '' }}</td> --}}
+                        <td>
+                            @foreach ($post->categories as $category)
+                                {{ $category->name }}
+                            @endforeach
+                        </td>
                         <td>{{ $post->description }}</td>
                         <td>
                             @if($post->visibility === 0)

@@ -23,6 +23,11 @@
                     </div>
                     <div class="card-text flex-grow-1">
                         <p><strong>Descrizione:</strong> {{ $post->description }} </p>
+                        <p><strong>Categoria:</strong> 
+                            @foreach ($post->categories as $category)
+                                {{ $category->name }}
+                            @endforeach
+                        </p>
                         <p><strong>Visibilità:</strong>
                             @if($post->visibility === 0)
                             <span><i>No</i></span>

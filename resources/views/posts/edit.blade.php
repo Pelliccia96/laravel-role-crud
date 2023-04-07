@@ -44,14 +44,14 @@
                 @enderror
             </div>
 
-            {{-- <div class="mb-4">
+            <div class="mb-4">
                 <label class="form-label">Categoria: </label>
-                <select name="type_id" class="form-select">
-                    @foreach ($types as $type)
-                    <option value="{{ $type->id }}">{{ $type->name }}</option>
+                <select name="name" class="form-select">
+                    @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
-            </div> --}}
+            </div>
 
             <div class="mb-4">
                 <label class="form-label">Descrizione: </label>

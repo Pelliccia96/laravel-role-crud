@@ -42,37 +42,19 @@
                 @enderror
             </div>
 
-            {{-- <label class="form-label">Type: </label>
-            <select name="type_id" class="form-select mb-4">
-                @foreach ($types as $type)
-                <option value="{{ $type->id }}">{{ $type->name }}</option>
-                @endforeach
-            </select>
-
-            <div class="mb-3">
-                @foreach ($technologies as $technology)
-                <div class="form-check form-check-inline @error('technologies') is-invalid @enderror">
-                    <input class="form-check-input @error('technologies') is-invalid @enderror" type="checkbox"
-                        id="technologyCheckbox_{{ $loop->index }}" value="{{ $technology->id }}" name="technologies[]"
-                        {{ in_array( $technology->id, old('technologies', [])) ? 'checked' : '' }}
-                    >
-                    <label class="form-check-label" for="technologyCheckbox{{ $loop->index }}">{{ $technology->name
-                        }}</label>
-                </div>
-                @endforeach
-
-                @error('technologies')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div> --}}
+            <div class="mb-4">
+                <label class="form-label">Categoria: </label>
+                <select name="name" class="form-select">
+                    @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
 
             <div class="mb-4">
                 <label class="form-label">Descrizione: </label>
-                <textarea type="text" name="description"
-                    class="form-control @error('description') is-invalid @enderror" rows="3"
-                    value="{{ $errors->has('description') ? '' : old('description') }}"></textarea>
+                <textarea type="text" name="description" class="form-control @error('description') is-invalid @enderror"
+                    rows="3" value="{{ $errors->has('description') ? '' : old('description') }}"></textarea>
                 @error('description')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -81,8 +63,8 @@
             </div>
 
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="switch" name="visibility"
-                    {{ old('visibility', 1) ? 'checked' : '' }} value="1">
+                <input class="form-check-input" type="checkbox" role="switch" id="switch" name="visibility" {{
+                    old('visibility', 1) ? 'checked' : '' }} value="1">
                 <label class="form-check-label" for="switch">Visibilità </label>
             </div>
 
