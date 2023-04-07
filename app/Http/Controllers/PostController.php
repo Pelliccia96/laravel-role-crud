@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -21,49 +26,73 @@ class PostController extends Controller
      */
     public function create()
     {
-        $title = "Create Blade";
-        return view("user.create", compact('title'));
+        $posts = Post::all();
+        return view("posts.create", compact('posts'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        //
+        $user = Auth::user();
+        $data = $request->validated();
+        $post = Post::create($data);
+
+        $post->user_id = $user->id;
+        $post->save();
+
+        return redirect()->route('posts.show', $post->id);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
-        $title = "Show Blade";
-        return view("user.show", compact('title'));
+        $user_id = auth()->user()->id;
+        $posts = Post::where('user_id', $user_id)
+            ->orderBy('created_at')
+            ->get();
+        return view("posts.show", compact('post', 'posts'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        $title = "Edit Blade";
-        return view("user.edit", compact('title'));
+        // $post = Post::findOrFail($id);
+
+        // dd($post->categories);
+
+        return view("posts.edit", compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $data = $request->validated();
+        $post->update($data);
+
+        $post->visibility = $request->has('visibility');
+        $post->save();
+
+        return redirect()->route('posts.show', $post->id);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        if($post->image){
+            Storage::delete($post->image);
+        }
+        $post->delete();
+
+        return redirect()->route('dashboard');
     }
 }
