@@ -39,6 +39,11 @@ class PostController extends Controller
         $data = $request->validated();
         $post = Post::create($data);
 
+        if (key_exists('image', $data)){
+            $path = Storage::put('posts', $data['image']);
+            $post->image = $path;
+        } 
+
         $post->user_id = $user->id;
         $post->save();
 
@@ -76,6 +81,12 @@ class PostController extends Controller
     {
         $data = $request->validated();
         $post->update($data);
+
+        if(key_exists("image", $data)){
+            $path = Storage::put("posts", $data["image"]);
+            Storage::delete($post->image);
+            $post->image = $path;
+        }
 
         $post->visibility = $request->has('visibility');
         $post->save();

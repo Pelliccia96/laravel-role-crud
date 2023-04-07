@@ -15,8 +15,11 @@
                         <h2> {{ $post->title }} </h2>
                     </div>
                     <div class="card-img-top text-center pb-3">
-                        <img class="card-img-top" src="{{ asset('storage/' . $post->image) }}" alt=""
-                            style="height:230px">
+                        @if($post->image)
+                        <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid w-100 rounded">
+                        @else
+                        <img src="https://i.ytimg.com/vi/7NOSDKb0HlU/maxresdefault.jpg" class="img-fluid w-100 rounded">
+                        @endif
                     </div>
                     <div class="card-text flex-grow-1">
                         <p><strong>Descrizione:</strong> {{ $post->description }} </p>

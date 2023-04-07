@@ -72,9 +72,15 @@
                     <tr>
                         <td>{{ $post->id }}</td>
                         <td>{{ $post->title }}</td>
+                        @if($post->image)
                         <td>
-                            <img src="{{ asset('/storage/' . $post['image']) }}" class="w-150">
+                            <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid rounded" style="height:100px; width:100px">
                         </td>
+                        @else
+                        <td>
+                            <img src="https://i.ytimg.com/vi/7NOSDKb0HlU/maxresdefault.jpg" class="img-fluid rounded" style="height:100px; width:100px">
+                        </td>
+                        @endif
                         {{-- <td>{{ $post->category ? $post->category->name : '' }}</td> --}}
                         <td>{{ $post->description }}</td>
                         <td>
