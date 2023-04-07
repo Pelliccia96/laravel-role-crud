@@ -77,17 +77,23 @@
                         </td>
                         {{-- <td>{{ $post->category ? $post->category->name : '' }}</td> --}}
                         <td>{{ $post->description }}</td>
-                        <td>{{ $post->visibility }}</td>
+                        <td>
+                            @if($post->visibility === 0)
+                            <span class="fw-semibold"><i>No</i></span>
+                            @else
+                            <span class="fw-semibold"><i>Si</i></span>
+                            @endif
+                        </td>
                         <td>
                             <a href="{{ route('posts.show', $post->id) }}"
                                 class="text-decoration-none fw-semibold text-white">
-                                <button class="btn btn-primary">#{{ $post->id }}</button>
+                                <button class="btn btn-primary"><span class="fw-semibold"><i>i</i></span></button>
                             </a>
                         </td>
                         <td>
                             <a href="{{ route('posts.edit', $post->id) }}"
                                 class="text-decoration-none fw-semibold text-white">
-                                <button class="btn btn-info text-white">#{{ $post->id }}</button>
+                                <button class="btn btn-info text-white"><span class="fw-semibold"><i>#{{ $post->id }}</i></span></button>
                             </a>
                         </td>
                         <td>
@@ -104,4 +110,16 @@
         </div>
     </div>
 </div>
+<script>
+    const forms = document.querySelectorAll(".delete-form");
+    forms.forEach((form) => {
+        form.addEventListener("submit", function(e) {
+        e.preventDefault();
+        const conferma = confirm("Sicuro?");
+        if (conferma === true) {
+            form.submit();
+        }
+        })
+    })
+</script>
 @endsection

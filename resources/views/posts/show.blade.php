@@ -20,11 +20,17 @@
                     </div>
                     <div class="card-text flex-grow-1">
                         <p><strong>Descrizione:</strong> {{ $post->description }} </p>
-                        <p><strong>Visibilità:</strong> {{ $post->visibility }} </p>
+                        <p><strong>Visibilità:</strong>
+                            @if($post->visibility === 0)
+                            <span><i>No</i></span>
+                            @else
+                            <span><i>Si</i></span>
+                            @endif
+                        </p>
                     </div>
                     <div class="d-flex gap-2  justify-content-center">
                         <a class="link-show" href={{ route('posts.edit', $post->id) }}>
-                            <button class="btn btn-info text-white me-3">Modifica</button>
+                            <button class="btn btn-primary text-white me-3">Modifica</button>
                         </a>
                         <form action="{{ route('posts.destroy', $post->id) }}" method="POST"
                             class="delete-form d-inline-block">

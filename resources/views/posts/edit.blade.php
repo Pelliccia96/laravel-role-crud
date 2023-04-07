@@ -73,11 +73,9 @@
 
             <div class="mt-4">
                 <button type="submit" class="btn btn-primary me-3">Modifica</button>
+                <a class="btn btn-danger" href="{{ route('dashboard') }}">Annulla</a>
             </div>
         </form>
-        <div class="text-center">
-            <a href="{{ route("dashboard") }}"><button class="btn btn-secondary">Dashboard</button></a>
-        </div>
     </div>
 </div>
 @endsection
