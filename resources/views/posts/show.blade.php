@@ -35,6 +35,9 @@
                             <span><i>Si</i></span>
                             @endif
                         </p>
+                        @if (Auth::user()->role === 'admin')
+                        <p><strong>Autore:</strong> <i>{{ $post->user->name }}</i> </p>
+                        @endif
                     </div>
                     <div class="d-flex gap-2  justify-content-center">
                         <a class="link-show" href={{ route('posts.edit', $post->id) }}>

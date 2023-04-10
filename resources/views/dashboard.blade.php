@@ -33,6 +33,7 @@
                         <th>Nome utente</th>
                         <th>Email</th>
                         <th>Creato il</th>
+                        <th>Ruolo</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,6 +43,7 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->created_at }}</td>
+                        <td>{{ $user->role }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -64,6 +66,9 @@
                         <th>Immagine</th>
                         <th>Categoria</th>
                         <th>Descrizione post</th>
+                        @if (Auth::user()->role === 'admin')
+                        <th>Autore</th>
+                        @endif
                         <th>Visibilità</th>
                         <th>Mostra</th>
                         <th>Modifica</th>
@@ -91,6 +96,9 @@
                             @endforeach
                         </td>
                         <td>{{ $post->description }}</td>
+                        @if (Auth::user()->role === 'admin')
+                        <td>{{ $post->user->name }}</td>
+                        @endif
                         <td>
                             @if($post->visibility === 0)
                             <span class="fw-semibold"><i>No</i></span>

@@ -51,6 +51,7 @@ class PostController extends Controller
             $post->image = $path;
         }
 
+        $post->visibility = $request->has('visibility');
         $post->user_id = $user->id;
         $post->save();
 
@@ -72,6 +73,11 @@ class PostController extends Controller
         $posts = Post::where('user_id', $user_id)
             ->orderBy('created_at')
             ->get();
+
+        if(Auth::user()->role === 'admin') {
+            $posts = Post::all();
+        }
+
         return view("posts.show", compact('post', 'posts'));
     }
 
