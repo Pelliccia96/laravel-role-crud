@@ -23,5 +23,8 @@ class DatabaseSeeder extends Seeder
         
         /* $this->call(UsersSeeder::class);
         $this->call(CategoriesSeeder::class); */
+
+        // php artisan db:seed UsersTableSeeder
+        // php artisan db:seed CategoriesTableSeeder
     }
 }

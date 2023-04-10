@@ -44,9 +44,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('posts', PostController::class);
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
+/* Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::resource('admin', AdminController::class);
-});
+}); */
 
 require __DIR__.'/auth.php';

@@ -74,7 +74,7 @@ class PostController extends Controller
             ->orderBy('created_at')
             ->get();
 
-        if(Auth::user()->role === 'admin') {
+        if(Auth::user()->role ? 'super-admin' : 'admin') {
             $posts = Post::all();
         }
 
@@ -115,6 +115,11 @@ class PostController extends Controller
         }
 
         $post->visibility = $request->has('visibility');
+
+        /* if(Auth::user()->role === 'super-admin') {
+            $post->role()->sync($data['role']);
+        } */
+
         $post->save();
 
         $post->categories()->sync($data['categories']);

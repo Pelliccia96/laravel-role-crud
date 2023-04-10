@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col">
             <div class="card">
-                @if (Auth::user()->role === 'admin')
+                @if (Auth::user()->role ? 'super-admin' : 'admin')
                 <div class="card-header">{{ __('Admin Dashboard') }}</div>
                 @else
                 <div class="card-header">{{ __('User Dashboard') }}</div>
@@ -27,7 +27,7 @@
         </div>
     </div>
     {{-- Tabella Users --}}
-    @if (Auth::user()->role === 'admin')
+    @if (Auth::user()->role ? 'super-admin' : 'admin')
     <div class="card my-5">
         <div class="card-body">
             <table class="table">
@@ -70,7 +70,7 @@
                         <th>Immagine</th>
                         <th>Categoria</th>
                         <th>Descrizione post</th>
-                        @if (Auth::user()->role === 'admin')
+                        @if (Auth::user()->role ? 'super-admin' : 'admin')
                         <th>Autore</th>
                         @endif
                         <th>Visibilità</th>
@@ -100,7 +100,7 @@
                             @endforeach
                         </td>
                         <td>{{ $post->description }}</td>
-                        @if (Auth::user()->role === 'admin')
+                        @if (Auth::user()->role ? 'super-admin' : 'admin')
                         <td>{{ $post->user->name }}</td>
                         @endif
                         <td>
