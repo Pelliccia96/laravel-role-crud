@@ -8,11 +8,7 @@
     <div class="row justify-content-center">
         <div class="col">
             <div class="card">
-                @if (Auth::user()->role === 'admin')
-                <div class="card-header">{{ __('Admin Dashboard') }}</div>
-                @else
-                <div class="card-header">{{ __('User Dashboard') }}</div>
-                @endif
+                <div class="card-header">{{ __('Super-admin Dashboard') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -27,7 +23,6 @@
         </div>
     </div>
     {{-- Tabella Users --}}
-    @if (Auth::user()->role === 'admin')
     <div class="card my-5">
         <div class="card-body">
             <table class="table">
@@ -38,6 +33,7 @@
                         <th>Email</th>
                         <th>Creato il</th>
                         <th>Ruolo</th>
+                        <th>Modifica</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,15 +44,21 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->created_at }}</td>
                         <td>{{ $user->role }}</td>
+                        <td>
+                            <a href="#"
+                                class="text-decoration-none fw-semibold text-white">
+                                <button class="btn btn-info text-white"><span class="fw-semibold"><i>#{{ $user->id
+                                            }}</i></span></button>
+                            </a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-    @endif
     <div class="mt-5 mb-3">
-        <a href="{{ route('posts.create') }}"><button class="btn btn-secondary fw-semibold mx-3">&plus; Aggiungi Nuovo
+        <a href="{{ route('admin.create') }}"><button class="btn btn-secondary fw-semibold mx-3">&plus; Aggiungi Nuovo
                 Post</button></a>
     </div>
     {{-- Tabella Post --}}
@@ -70,9 +72,7 @@
                         <th>Immagine</th>
                         <th>Categoria</th>
                         <th>Descrizione post</th>
-                        @if (Auth::user()->role === 'admin')
                         <th>Autore</th>
-                        @endif
                         <th>Visibilità</th>
                         <th>Mostra</th>
                         <th>Modifica</th>
@@ -86,23 +86,23 @@
                         <td>{{ $post->title }}</td>
                         @if($post->image)
                         <td>
-                            <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid rounded" style="height:100px; width:100px">
+                            <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid rounded"
+                                style="height:100px; width:100px">
                         </td>
                         @else
                         <td>
-                            <img src="https://i.ytimg.com/vi/7NOSDKb0HlU/maxresdefault.jpg" class="img-fluid rounded" style="height:100px; width:100px">
+                            <img src="https://i.ytimg.com/vi/7NOSDKb0HlU/maxresdefault.jpg" class="img-fluid rounded"
+                                style="height:100px; width:100px">
                         </td>
                         @endif
                         {{-- <td>{{ $post->category ? $post->category->name : '' }}</td> --}}
                         <td>
                             @foreach ($post->categories as $category)
-                                {{ $category->name }}
+                            {{ $category->name }}
                             @endforeach
                         </td>
                         <td>{{ $post->description }}</td>
-                        @if (Auth::user()->role === 'admin')
                         <td>{{ $post->user->name }}</td>
-                        @endif
                         <td>
                             @if($post->visibility === 0)
                             <span class="fw-semibold"><i>No</i></span>
@@ -111,19 +111,20 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('posts.show', $post->id) }}"
+                            <a href="{{ route('admin.show', $post->id) }}"
                                 class="text-decoration-none fw-semibold text-white">
                                 <button class="btn btn-primary"><span class="fw-semibold"><i>i</i></span></button>
                             </a>
                         </td>
                         <td>
-                            <a href="{{ route('posts.edit', $post->id) }}"
+                            <a href="{{ route('admin.edit', $post->id) }}"
                                 class="text-decoration-none fw-semibold text-white">
-                                <button class="btn btn-info text-white"><span class="fw-semibold"><i>#{{ $post->id }}</i></span></button>
+                                <button class="btn btn-info text-white"><span class="fw-semibold"><i>#{{ $post->id
+                                            }}</i></span></button>
                             </a>
                         </td>
                         <td>
-                            <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="delete-form">
+                            <form action="{{ route('admin.destroy', $post->id) }}" method="POST" class="delete-form">
                                 @csrf()
                                 @method('delete')
                                 <button class="btn btn-danger fw-bold">X</button>
