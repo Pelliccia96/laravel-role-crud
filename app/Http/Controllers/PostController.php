@@ -84,6 +84,7 @@ class PostController extends Controller
 
         // dd($post->categories);
         $categories = Category::all();
+        // $this->authorize('update', $post);
 
         return view("posts.edit", compact('post', 'categories'));
     }

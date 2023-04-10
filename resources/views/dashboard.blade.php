@@ -23,6 +23,7 @@
         </div>
     </div>
     {{-- Tabella Users --}}
+    @if (Auth::user()->role === 'admin')
     <div class="card my-5">
         <div class="card-body">
             <table class="table">
@@ -47,6 +48,7 @@
             </table>
         </div>
     </div>
+    @endif
     <div class="mt-5 mb-3">
         <a href="{{ route('posts.create') }}"><button class="btn btn-secondary fw-semibold mx-3">&plus; Aggiungi Nuovo
                 Post</button></a>

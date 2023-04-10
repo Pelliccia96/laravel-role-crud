@@ -12,8 +12,9 @@ class DashboardController extends Controller
     public function index()
     {
         $users = User::all();
-        $posts = Post::all();
         $categories = Category::all();
+
+        $posts = Post::where('user_id', auth()->id())->get();
 
         return view("dashboard", compact('users', 'posts', 'categories'));
     }
