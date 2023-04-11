@@ -17,7 +17,7 @@ class DashboardController extends Controller
 
         $posts = Post::where('user_id', auth()->id())->get();
 
-        if(Auth::user()->role ? 'super-admin' : 'admin') {
+        if(Auth::user()->role == 'super-admin' ? true : Auth::user()->role == 'admin') {
             $posts = Post::all();
         }
 

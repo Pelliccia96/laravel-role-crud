@@ -74,7 +74,7 @@ class PostController extends Controller
             ->orderBy('created_at')
             ->get();
 
-        if(Auth::user()->role ? 'super-admin' : 'admin') {
+        if(Auth::user()->role == 'super-admin' ? true : Auth::user()->role == 'admin') {
             $posts = Post::all();
         }
 

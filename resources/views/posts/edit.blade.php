@@ -71,19 +71,6 @@
                 <label class="form-check-label" for="switch">Visibilità </label>
             </div>
 
-            {{-- @if(Auth::user()->role === 'super-admin')
-            <div class="my-4">
-                <label class="form-label">Ruolo: </label>
-                <input type="text" name="role" class="form-control @error('role') is-invalid @enderror"
-                    value="{{ $errors->has('role') ? '' : $post->user->role }}">
-                @error('title')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-            @endif --}}
-
             <div class="mt-4">
                 <button type="submit" class="btn btn-primary me-3">Modifica</button>
                 <a class="btn btn-danger" href="{{ route('dashboard') }}">Annulla</a>
