@@ -4,7 +4,7 @@
 <div class="container p-5 h-100 rounded-4">
     <div class="row h-100 overflow-auto justify-content-center">
         <div class="d-flex justify-content-between align-items-center my-5">
-            @if(Auth::user()->role == 'super-admin' ? true : Auth::user()->role == 'admin')
+            @if(Auth::user()->role_id == '1' ? true : Auth::user()->role_id == '2')
             <h1 class="text-dark">POST UTENTI:</h1>
             @else
             <h1 class="text-dark">I TUOI POST!</h1>
@@ -39,7 +39,7 @@
                             <span><i>Si</i></span>
                             @endif
                         </p>
-                        @if (Auth::user()->role == 'super-admin' ? true : Auth::user()->role == 'admin')
+                        @if (Auth::user()->role_id == '1' ? true : Auth::user()->role_id == '2')
                         <p><strong>Autore:</strong> <i>{{ $post->user->name }}</i></p>
                         <p><strong>ID Post:</strong> {{ $post->id }} </p>
                         @endif

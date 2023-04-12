@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,5 +58,19 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function editrole(User $user)
+    {
+        $roles = Role::all();
+        
+        return view('profile.editrole', compact('user', 'roles'));
+    }
+
+    public function updaterole(User $user)
+    {
+        @dd($user->id);
+        
+        return redirect()->route('dashboard');
     }
 }

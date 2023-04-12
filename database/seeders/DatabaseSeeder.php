@@ -19,11 +19,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // Esegue tutti i Seeder all'esecuzione del comando php artisan db:seed.
-        
-        /* $this->call(UsersSeeder::class);
-        $this->call(CategoriesSeeder::class); */
-
+        // php artisan db:seed RolesTableSeeder
         // php artisan db:seed UsersTableSeeder
         // php artisan db:seed CategoriesTableSeeder
     }

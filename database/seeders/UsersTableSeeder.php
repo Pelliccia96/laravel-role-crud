@@ -14,25 +14,21 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        // Definisco i dati degli utenti
         $users = [
             [
                 'name' => 'Supremo',
                 'email' => 'supremo@gmail.com',
                 'password' => Hash::make('password'),
-                'role' => 'super-admin',
+                'role_id' => 1,
             ],
             [
                 'name' => 'Admin',
                 'email' => 'admin@gmail.com',
                 'password' => Hash::make('password'),
-                'role' => 'admin',
+                'role_id' => 2,
             ],
         ];
 
-        // La password è criptata utilizzando la funzione Hash::make.
-
-        // Ciclo sugli utenti e li inserisco nella tabella "users"
         foreach ($users as $user) {
             User::create($user);
         }

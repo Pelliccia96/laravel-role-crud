@@ -21,8 +21,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',
+        'role_id'
     ];
+
+    public function roles() {
+
+        return $this->hasOne(Role::class);
+        
+    }
 
     public function posts() {
 

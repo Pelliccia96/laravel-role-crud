@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col">
             <div class="card">
-                @if (Auth::user()->role == 'super-admin' ? true : Auth::user()->role == 'admin')
+                @if (Auth::user()->role_id == '1' ? true : Auth::user()->role_id == '2')
                 <div class="card-header">{{ __('Admin Dashboard') }}</div>
                 @else
                 <div class="card-header">{{ __('User Dashboard') }}</div>
@@ -27,7 +27,7 @@
         </div>
     </div>
     {{-- Tabella Users --}}
-    @if (Auth::user()->role == 'super-admin' ? true : Auth::user()->role == 'admin')
+    @if (Auth::user()->role_id == '1' ? true : Auth::user()->role_id == '2')
     <div class="card my-5">
         <div class="card-body">
             <table class="table">
@@ -47,7 +47,32 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->created_at }}</td>
-                        <td>{{ $user->role }}</td>
+                        @if(Auth::user()->role_id == '1')
+                        <td>
+                            <a href="{{ route('profile.editrole', $user->id) }}"
+                                class="text-decoration-none fw-semibold text-white">
+                                <button class="btn btn-info text-white"><span class="fw-semibold">
+                                    @if($user->role_id === 1)
+                                    <i>Super-Admin</i>
+                                    @elseif($user->role_id === 2)
+                                    <i>Admin</i>
+                                    @else
+                                    <i>User</i>
+                                    @endif
+                                </span></button>
+                            </a>
+                        </td>
+                        @else
+                        <td>
+                            @if($user->role_id === 1)
+                            <i>Super-Admin</i>
+                            @elseif($user->role_id === 2)
+                            <i>Admin</i>
+                            @else
+                            <i>User</i>
+                            @endif
+                        </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
@@ -65,14 +90,14 @@
             <table class="table">
                 <thead>
                     <tr>
-                        @if (Auth::user()->role == 'super-admin' ? true : Auth::user()->role == 'admin')
+                        @if (Auth::user()->role_id == '1' ? true : Auth::user()->role_id == '2')
                         <th>ID</th>
                         @endif
                         <th>Titolo post</th>
                         <th>Immagine</th>
                         <th>Categoria</th>
                         <th>Descrizione post</th>
-                        @if (Auth::user()->role == 'super-admin' ? true : Auth::user()->role == 'admin')
+                        @if (Auth::user()->role_id == '1' ? true : Auth::user()->role_id == '2')
                         <th>Autore</th>
                         @endif
                         <th>Visibilità</th>
@@ -84,7 +109,7 @@
                 <tbody>
                     @foreach ($posts as $post)
                     <tr>
-                        @if (Auth::user()->role == 'super-admin' ? true : Auth::user()->role == 'admin')
+                        @if (Auth::user()->role_id == '1' ? true : Auth::user()->role_id == '2')
                         <td>{{ $post->id }}</td>
                         @endif
                         <td>{{ $post->title }}</td>
@@ -97,14 +122,13 @@
                             <img src="https://i.ytimg.com/vi/7NOSDKb0HlU/maxresdefault.jpg" class="img-fluid rounded" style="height:100px; width:100px">
                         </td>
                         @endif
-                        {{-- <td>{{ $post->category ? $post->category->name : '' }}</td> --}}
                         <td>
                             @foreach ($post->categories as $category)
                                 {{ $category->name }}
                             @endforeach
                         </td>
                         <td>{{ $post->description }}</td>
-                        @if (Auth::user()->role == 'super-admin' ? true : Auth::user()->role == 'admin')
+                        @if (Auth::user()->role_id == '1' ? true : Auth::user()->role_id == '2')
                         <td>{{ $post->user->name }}</td>
                         @endif
                         <td>

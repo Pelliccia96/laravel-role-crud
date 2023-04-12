@@ -71,8 +71,6 @@ class CategoryController extends Controller
         $category->update($data);
         $category->save();
 
-        // $category->categories()->sync($data["categories"]);
-
         return redirect()->route('dashboard', $category->id);
     }
 

@@ -18,8 +18,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        /* $users = User::all();
-        return view("dashboard", compact('users')); */
+        //
     }
 
     /**
@@ -38,15 +37,11 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        // validated() usa le regole indicate nella funzione rules dello StorePostRequest e ci ritorna i dati validati
         $user = Auth::user();
         $data = $request->validated();
         $post = Post::create($data);
 
-        // Salviamo il file nello storage e recuperiamo il path
-        // carico il file solo se ne ricevo uno
         if (key_exists('image', $data)) {
-            // salvo in una variabile temporanea il percorso del nuovo file
             $path = Storage::put('posts', $data['image']);
             $post->image = $path;
         }
@@ -55,9 +50,7 @@ class PostController extends Controller
         $post->user_id = $user->id;
         $post->save();
 
-        // Controlla che nei dati che il server sta ricevendo, ci sia un valore per la chiave "categories".
         if ($request->has("categories")) {
-            // if (key_exists("categories", $data)) {
             $post->categories()->attach($data["categories"]);
         }
 
@@ -74,7 +67,7 @@ class PostController extends Controller
             ->orderBy('created_at')
             ->get();
 
-        if(Auth::user()->role == 'super-admin' ? true : Auth::user()->role == 'admin') {
+        if(Auth::user()->role_id == '1' ? true : Auth::user()->role_id == '2') {
             $posts = Post::all();
         }
 
@@ -86,11 +79,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        // $post = Post::findOrFail($id);
-
-        // dd($post->categories);
         $categories = Category::all();
-        // $this->authorize('update', $post);
 
         return view("posts.edit", compact('post', 'categories'));
     }
@@ -103,22 +92,14 @@ class PostController extends Controller
         $data = $request->validated();
         $post->update($data);
 
-        // carico il file solo se ne ricevo uno
         if (key_exists("image", $data)) {
-            // salvo in una variabile temporanea il percorso del nuovo file
             $path = Storage::put("posts", $data["image"]);
-            // Dopo aver caricato la nuova immagine, prima di aggiornare il db,
-            // cancelliamo dallo storage il vecchio file.
             Storage::delete($post->image);
 
             $post->image = $path;
         }
 
         $post->visibility = $request->has('visibility');
-
-        /* if(Auth::user()->role === 'super-admin') {
-            $post->role()->sync($data['role']);
-        } */
 
         $post->save();
 
