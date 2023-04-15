@@ -60,17 +60,23 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    public function editrole(User $user)
+    public function editrole($id)
     {
+        $user = User::find($id);
         $roles = Role::all();
         
         return view('profile.editrole', compact('user', 'roles'));
     }
 
-    public function updaterole(User $user)
+    public function updaterole(Request $request, $id)
     {
-        @dd($user->id);
+        $data = $request->validate([
+            'role_id' => 'required|exists:roles,id'
+        ]);
+
+        $user = User::find($id);
+        $user->update($data);
         
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with('success', 'User role updated successfully.');
     }
 }

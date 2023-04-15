@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/profile/{profile}', [ProfileController::class, 'editrole'])->name('profile.editrole');
-    Route::put('/profile', [ProfileController::class, 'updaterole'])->name('profile.updaterole');
+    Route::put('/profile/{id}/updaterole', [ProfileController::class, 'updaterole'])->name('profile.updaterole');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

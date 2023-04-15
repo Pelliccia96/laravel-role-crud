@@ -24,9 +24,9 @@ class User extends Authenticatable
         'role_id'
     ];
 
-    public function roles() {
+    public function role() {
 
-        return $this->hasOne(Role::class);
+        return $this->belongsTo(Role::class);
         
     }
 
