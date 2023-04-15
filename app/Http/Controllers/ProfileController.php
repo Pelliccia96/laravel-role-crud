@@ -60,6 +60,9 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
+    /**
+     * Management of the super-admin for changing the role of registered users.
+     */
     public function editrole($id)
     {
         $user = User::find($id);

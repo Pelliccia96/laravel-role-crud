@@ -37,27 +37,5 @@
             </div>
         </form>
     </div>
-    {{-- <div class="py-5">
-        <form method="POST" action="{{ route('profile.updaterole', $user) }}">
-            @csrf
-            @method('PUT')
-            <div class="form-group">
-                <label class="mb-2" for="role_id">Ruolo:</label>
-                <select name="role_id" class="form-control @error('role_id') is-invalid @enderror" id="role_id">
-                    @foreach($roles as $role)
-                    <option value="{{ $role->id }}" @if($user->role_id == $role->id) selected @endif>{{ $role->role }}
-                    </option>
-                    @endforeach
-                </select>
-                @error('role_id')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="mt-4">
-                <button type="submit" class="btn btn-primary me-3">Update</button>
-                <a class="btn btn-danger" href="{{ route('dashboard') }}">Annulla</a>
-            </div>
-        </form>
-    </div> --}}
 </div>
 @endsection
